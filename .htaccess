@@ -1,0 +1,9 @@
+RewriteEngine On
+ErrorDocument 404 /404
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php [L]
+<files config.php>
+order allow,deny
+deny from all
+</files>
