@@ -10,7 +10,9 @@
     <script src="../../library/js/jquery-3.4.1.min.js"></script>
     <script src="../../library/js/bootstrap.min.js"></script>
 </head>
+
 <body>
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="">Test work</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
@@ -19,17 +21,20 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-between" id="navbar">
-
-        <div class="navbar-nav">
-            <div class="nav-item">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
                 <a class="nav-link"
                    href="<?= SITE_ROOT . "home"; ?>">Домашняя</a>
-            </div>
-        </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="<?= SITE_ROOT . "admin"; ?>">Админка</a>
+            </li>
+        </ul>
 
-        <div class="navbar-nav">
+        <ul class="navbar-nav">
             <?php if ($_SESSION['username']) { ?>
-                <div class="nav item m-1">
+                <li class="nav-item m-1">
                     <div class="btn-group">
                         <a href="<?= SITE_ROOT . "login/profilePage"; ?>" class="btn
                         btn-secondary"><?= $_SESSION['username'] ?></a>
@@ -44,21 +49,21 @@
                                href="<?= SITE_ROOT . "login/logout"; ?>">Выйти</a>
                         </div>
                     </div>
-                </div>
+                </li>
             <?php } else { ?>
 
-                <div class="nav-item m-1">
+                <li class="nav-item m-1">
                     <a class="btn btn-secondary"
                        href="<?= SITE_ROOT . 'registration'; ?>">Регистрация</a>
-                </div>
+                </li>
 
-                <div class="nav-item m-1">
+                <li class="nav-item m-1">
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#loginModal">
                         Войти
                     </button>
-                </div>
+                </li>
             <?php } ?>
-        </div>
+        </ul>
     </div>
     </div>
 </nav>
@@ -77,8 +82,9 @@
             </div>
             <div class="modal-body">
                 <div class="loginModal">
-                    <form id="enterForm">
-                        <div class="form-row mb-3">
+                    <!--TODO НАСТРОИТЬ ВАЛИДАЦИЮ ПОЛЕЙ-->
+                    <form id="enterForm" method="post" action="<?= SITE_ROOT . "login/loginUser" ?>">
+                        <div class=" form-row mb-3">
                             <label for="enter-login">Логин</label>
                             <input type="text" class="form-control" name="enter-login" id="enter-login"
                                    placeholder="Имя пользователя">
@@ -110,6 +116,5 @@
     include 'app/views/' . $content_view;
     ?>
 </div>
-
 </body>
 </html>

@@ -49,10 +49,10 @@ class Registration extends Model
      *
      * @return void
      */
-    public function insertUserDB($email, $username, $pass, $first_name, $last_name, $birth_date, $avatar)
+    public function insertUserDB($email, $login, $password, $surname, $name, $phone, $avatar, $address)
     {
-        $sql = "INSERT INTO `table_users` (`id`, `username`, `email`, `pass`, `last_name`, `first_name`, `birth_date`, `avatar`)
-                       VALUES (NULL,'{$username}','{$email}','{$pass}','{$last_name}','{$first_name}','{$birth_date}','{$avatar}');";
+        $sql = "INSERT INTO `clients` (`login`, `email`, `password`, `surname`, `name`, `phone`, `image`, `address`)
+                       VALUES ('{$login}','{$email}','{$password}','{$surname}','{$name}','{$phone}','{$avatar}', '{$address}');";
         $this->db->DBRequest($sql);
     }
 
@@ -81,22 +81,51 @@ class Registration extends Model
     }
 
     /**
+     * Функция масштабирования изображения
+     *
+     * @param string $image - имя файла изображения
+     * @param int $w_o - ширина до которой уменьшаем изображение, по умолчанию 900
+     * @param int $h_o - высота изображения, по умолчанию вычисляется пропорционально
+     *
+     * @return void
+     */
+
+    /*TODO ДОДЕЛАТЬ СЖАТИЕ ИЗОБРАЖЕНИЯ*/
+    public function resizeImage($image, $w_o = 900, $h_o = false)
+    {
+        list($w_i, $h_i, $type) = getimagesize($image); // Получаем размеры и тип изображения (число)
+        $types = array("", "gif", "jpeg", "png"); // Массив с типами изображений
+        $ext = $types[$type]; // Зная "числовой" тип изображения, узнаём название типа
+        if ($ext) {
+            $func = 'imagecreatefrom' . $ext; // Получаем название функции, соответствующую типу, для создания изображения
+            $img_i = $func($image); // Создаём дескриптор для работы с исходным изображением
+        }
+
+        if (!$h_o) $h_o = $w_o / ($w_i / $h_i);
+        if (!$w_o) $w_o = $h_o / ($h_i / $w_i);
+        $img_o = imagecreatetruecolor($w_o, $h_o); // Создаём дескриптор для выходного изображения
+        imagecopyresampled($img_o, $img_i, 0, 0, 0, 0, $w_o, $h_o, $w_i, $h_i); // Переносим изображение из исходного в выходное, масштабируя его
+        $func = 'image' . $ext; // Получаем функция для сохранения результата
+        $func($img_o, $image); // Сохраняем изображение в тот же файл, что и исходное, возвращая результат этой операции
+    }
+
+    /**
      * Функция регистрирует юзера
      */
     public function registerUser()
     {
         $email = $_POST['email'];
-        $username = $_POST['username'];
-        $pass = md5($_POST['pass']);
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $birth_date = $_POST['birth_date'];
-        $avatar = strtr($_FILES['avatar']['name'], " ", "_");
-        $avatar_tmp_name =  strtr($_FILES['avatar']['tmp_name'], " ", "_");
-
+        $login = $_POST['login'];
+        $password = md5($_POST['password']);
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        $avatar = $_FILES['avatar']['name'];
+        $avatar_tmp_name = $_FILES['avatar']['tmp_name'];
         $this->uploadAvatar($avatar, $avatar_tmp_name);
-        $this->insertUserDB($email, $username, $pass, $first_name, $last_name, $birth_date, $avatar);
-        $_SESSION['username'] = $_POST['username'];
+        $this->insertUserDB($email, $login, $password, $surname, $name, $phone, $avatar, $address);
+        $_SESSION['username'] = $login;
         echo true;
     }
 

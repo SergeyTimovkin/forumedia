@@ -55,31 +55,14 @@
             </div>
         </div>
         <div class="form-row mb-3">
-            <div class="col-md-3">
-                <label for="city">Город</label>
-                <input type="text" class="form-control" id="city" name="city"
-                       placeholder="Город"
+            <div class="col-md-12">
+                <label for="city">Адрес</label>
+                <input type="text" class="form-control" id="address" name="address"
+                       placeholder="Город, улица, номер дома, почтовый индекс"
                        value="">
-            </div>
-
-            <div class="col-md-3">
-                <label for="street">Улица</label>
-                <input type="text" class="form-control" id="street" name="street"
-                       placeholder="Улица" value="">
-
-            </div>
-            <div class="col-md-3">
-                <label for="numberHouse">Номер дома</label>
-                <input type="text" class="form-control" id="numberHouse" name="numberHouse"
-                       placeholder="Номер дома"
-                       value="">
-            </div>
-
-            <div class="col-md-3">
-                <label for="indexpost">Почтовый индекс</label>
-                <input type="text" class="form-control" id="indexpost" name="indexpost"
-                       placeholder="Почтовый индекс"
-                       value="">
+                <small class="text-muted">
+                    Город, улица, номер дома, почтовый индекс
+                </small>
             </div>
         </div>
 

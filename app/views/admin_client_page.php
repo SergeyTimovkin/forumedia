@@ -8,7 +8,7 @@
                      src="<?= SITE_ROOT . "img/avatars/" . $data['image']; ?>"
                      alt="<?= $data['login']; ?>">
             </div>
-        <tr>
+           <tr>
             <th>Логин</th>
             <td><?= $data['login']; ?></td>
         </tr>

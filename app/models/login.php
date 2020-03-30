@@ -26,14 +26,14 @@ class Login extends Model
      */
     public function loginUser()
     {
-        $username = preg_replace('/\s+/', '', $_POST['username']);
-        $pass = md5($_POST['pass']);
-        $sql = "SELECT * FROM `table_users` WHERE  username ='{$username}' and pass = '{$pass}'";
+        $login = preg_replace('/\s+/', '', $_POST['enter-login']);
+        $password = md5($_POST['enter-password']);
+        $sql = "SELECT * FROM `clients` WHERE  login ='{$login}' and password = '{$password}'";
         $result = $this->db->DBRequest($sql);
         if ($result->num_rows) {
-            $_SESSION['username'] = $username;
+            $_SESSION['username'] = $login;
         } else {
-            echo 'incorrectUser';
+            echo 'ДОБАВИТЬ ПРОВЕРКУ НА НЕСООТВЕТСТВИЕ ЛОГИНА И ПАРОЛЯ';
         }
 
     }
@@ -45,7 +45,7 @@ class Login extends Model
      */
     public function getUserData()
     {
-        $sql = "SELECT `username`, `email`, `last_name`, `first_name`, `birth_date`, `avatar` FROM `table_users` WHERE username = '{$_SESSION['username']}'";
+        $sql = "SELECT `login`, `email`, `surname`, `name`, `phone`, `image`, `address` FROM clients WHERE login = '{$_SESSION['username']}'";
         $result = $this->db->DBRequest($sql);
         $profileData = mysqli_fetch_assoc($result);
         return $profileData;

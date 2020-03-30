@@ -20,7 +20,7 @@ class Login extends Controller
     {
         parent::__construct();
         //todo зачем подключаться к БД, если мы просто грузим страницу page
-        //$this->model = new \app\models\Login();
+        $this->model = new \app\models\Login();
     }
 
     /**
@@ -49,6 +49,7 @@ class Login extends Controller
     public function loginUser()
     {
         $this->model->loginUser();
+        if($_SESSION['username']) $this->profilePage();
     }
 
     /**
@@ -79,7 +80,7 @@ class Login extends Controller
     {
         unset($_SESSION['username']);
         session_destroy();
-        header('Location: ' . SITE_ROOT . "/home");
+        header('Location: ' . SITE_ROOT . "home");
         exit;
     }
 
