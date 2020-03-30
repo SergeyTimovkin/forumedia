@@ -10,6 +10,9 @@ use Controller;
  */
 class Notification extends Controller
 {
+
+    public $folderViews = 'notifcation/';
+
     /**
      * Функция генерирует страницу 404
      *
@@ -17,7 +20,7 @@ class Notification extends Controller
      */
     public function page404()
     {
-        $this->view->generate('404_page.php', 'template_page.php');
+        $this->view->generate($this->folderViews . '404_page.php', 'template_page.php');
     }
 
     /**
@@ -27,7 +30,7 @@ class Notification extends Controller
      */
     public function pageYouLogged()
     {
-        $this->view->generate('youLogged_page.php', 'template_page.php');
+        $this->view->generate($this->folderViews . 'youLogged_page.php', 'template_page.php');
     }
 }
 

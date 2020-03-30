@@ -81,10 +81,10 @@
 </div>
 
 <!--Валидация регистрации-->
-<script src="../../js/validation-register.js"></script>
+<script src="../../../js/validation-register.js"></script>
 
 <!--Скрипт маски телефона-->
-<script src="../../js/bootstrap-formhelpers-phone.js"></script>
+<script src="../../../js/bootstrap-formhelpers-phone.js"></script>
 
 <!--Добавление и удаление текста на кастомный инпут файла-->
 <script>

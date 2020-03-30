@@ -17,5 +17,5 @@
         </div>
     </form>
 </div>
-<script src="../../js/validation-login.js">
+<script src="../../../js/validation-login.js">
 </script>

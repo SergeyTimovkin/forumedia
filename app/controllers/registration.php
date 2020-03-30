@@ -11,6 +11,7 @@ use Controller;
 class Registration extends Controller
 {
 
+    public $folderView = 'registration/';
     /**
      * Registration constructor.
      *
@@ -40,7 +41,7 @@ class Registration extends Controller
             header('Location: ' . SITE_ROOT . 'notification/pageYouLogged');
             exit;
         } else {
-            $this->view->generate('registration_page.php', 'template_page.php');
+            $this->view->generate($this->folderView.'registration_page.php', 'template_page.php');
         }
     }
 

@@ -10,6 +10,8 @@ use Controller;
  */
 class Login extends Controller
 {
+    public $folderViews = 'login/';
+
     /**
      * Login constructor.
      *
@@ -34,10 +36,10 @@ class Login extends Controller
     public function index()
     {
         if ($_SESSION['username']) {
-            header('Location: ' . SITE_ROOT .'notification/pageYouLogged');
+            header('Location: ' . SITE_ROOT . 'notification/pageYouLogged');
             exit;
         } else {
-            $this->view->generate('login_page.php', 'template_page.php');
+            $this->view->generate($this->folderViews . 'login_page.php', 'template_page.php');
         }
     }
 
@@ -49,7 +51,7 @@ class Login extends Controller
     public function loginUser()
     {
         $this->model->loginUser();
-        if($_SESSION['username']) $this->profilePage();
+        if ($_SESSION['username']) $this->profilePage();
     }
 
     /**
@@ -64,7 +66,7 @@ class Login extends Controller
     {
         if ($_SESSION['username']) {
             $profileData = $this->model->getUserData();
-            $this->view->generate('profile_page.php', 'template_page.php', $profileData);
+            $this->view->generate($this->folderViews . 'profile_page.php', 'template_page.php', $profileData);
         } else {
             header('Location: ' . SITE_ROOT . '/login');
             exit;

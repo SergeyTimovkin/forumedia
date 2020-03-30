@@ -8,21 +8,44 @@ use Controller;
 class Admin extends Controller
 {
 
+    public $folderViews = 'admin/';
+
     public function __construct()
     {
         parent::__construct();
         $this->model = new \app\models\Admin();
+
     }
 
     public function index()
     {
-        $data = $this->model->getClients();
-        $this->view->generate('admin_main_page.php', 'template_page.php', $data);
+        if (!$_SESSION['admin']) $this->view->generate($this->folderViews . 'admin_login_page.php', $this->folderViews . 'template_admin_page.php');
+        else $this->getClients();
     }
+
+    public function login()
+    {
+        $this->model->login();
+    }
+
+    public function getClients()
+    {
+        $data = $this->model->getClients();
+        $this->view->generate($this->folderViews . 'admin_clients_page.php', $this->folderViews . 'template_admin_page.php', $data);
+    }
+
     public function changeClient()
     {
         $data = $this->model->getClient();
-        $this->view->generate('admin_client_page.php', 'template_page.php',$data);
+        $this->view->generate($this->folderViews . 'admin_client_page.php', $this->folderViews . 'template_admin_page.php', $data);
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['admin']);
+        session_destroy();
+        header('Location: ' . SITE_ROOT . "home");
+        exit;
     }
 
 

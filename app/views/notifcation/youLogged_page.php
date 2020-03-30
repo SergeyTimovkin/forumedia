@@ -2,4 +2,4 @@
    Вы уже вошли
 </div>
 <a class="btn btn-secondary"
-   href="<?= SITE_ROOT .  "/login/logout"; ?>">Выйти</a>
+   href="<?= SITE_ROOT .  "login/logout"; ?>">Выйти</a>

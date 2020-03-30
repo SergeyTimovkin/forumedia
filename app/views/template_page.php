@@ -26,10 +26,6 @@
                 <a class="nav-link"
                    href="<?= SITE_ROOT . "home"; ?>">Домашняя</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                   href="<?= SITE_ROOT . "admin"; ?>">Админка</a>
-            </li>
         </ul>
 
         <ul class="navbar-nav">
@@ -63,6 +59,10 @@
                     </button>
                 </li>
             <?php } ?>
+            <li class="nav-item m-1">
+                <a class="btn btn-secondary"
+                   href="<?= SITE_ROOT . "admin"; ?>">Админка</a>
+            </li>
         </ul>
     </div>
     </div>
