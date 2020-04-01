@@ -69,6 +69,16 @@ class Login extends Controller
             exit;
         }
     }
+    public function editUserData()
+    {
+        if ($_SESSION['username']) {
+            $profileData = $this->model->getUserData();
+            $this->view->generate($this->folderViews . 'editUserData_page.php', 'template_page.php', $profileData);
+        } else {
+            header('Location: ' . SITE_ROOT . '/login');
+            exit;
+        }
+    }
 
     /**
      * Функция удаляет пользователя из сессии

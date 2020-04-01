@@ -1,6 +1,6 @@
 <?php $data['image'] = $data['image'] ? $data['image'] : "noavatar.jpg"; ?>
 <div class="profile text-center">
-    <h1>Профиль</h1>
+    <h1>Профиль <span class="badge badge-secondary"><?= $data['login']; ?></span></h1>
     <table class="table table-hover">
         <tr>
             <div data-toggle="modal" data-target="#avatarModal">
@@ -33,6 +33,9 @@
             <td><?= $data['address']; ?></td>
         </tr>
     </table>
+    <a href="<?= SITE_ROOT . "login/editUserData/" ?>" class=" btn btn-outline-primary text-primary">
+        Редактировать данные профиля
+    </a>
 </div>
 
 

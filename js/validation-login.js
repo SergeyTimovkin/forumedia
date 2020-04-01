@@ -26,10 +26,10 @@ $("form#enterForm").submit(function (e) {
                     },
                     success: function (result) {
                         if (result) {
-                            $("#enter-password").after("<div class='invalid-feedback d-block'>Пара логин-пароль не совпадают</div>");
-                        } else {
-                            debugger;
                             window.location.replace(document.location.origin + '/login/profilePage');
+                        } else {
+                            $("#enter-password").after("<div class='invalid-feedback d-block'>Пара логин-пароль не совпадают</div>");
+
                         }
                     }
                 }

@@ -33,8 +33,9 @@ class Login extends Model
         $result = $this->db->DBRequest($sql);
         if ($result->num_rows) {
             $_SESSION['username'] = $login;
+            echo true;
         } else {
-            echo 1;
+            echo false;
         }
 
     }

@@ -111,7 +111,7 @@
 </div>
 
 <!-- END Модальное окно входа -->
-<div class="container">
+<div class="container mb-2">
     <?php
     include 'app/views/' . $content_view;
     ?>
