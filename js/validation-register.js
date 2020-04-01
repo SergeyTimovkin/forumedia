@@ -101,7 +101,7 @@ $("form#registerForm").submit(function (e) {
 
             case 'avatar' :
                 if (value.name) {
-                    var reg_avatar = /^[\wа-яА-Я\s_]+.(jpg|jpeg|png|JPG|JGEP|PNG)$/;
+                    var reg_avatar = /^[\wа-яА-Я\s_]+.(jpg|jpeg|png|JPG|JPEG|PNG)$/;
                     if (!reg_avatar.test(value.name)) $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Разрешены только jpg, jpeg, png форматы</div>");
                     else $("#" + key).addClass("is-valid");
                 }

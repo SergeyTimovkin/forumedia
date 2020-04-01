@@ -12,6 +12,7 @@ class Admin extends Controller
 
     public function __construct()
     {
+
         parent::__construct();
         $this->model = new \app\models\Admin();
 
@@ -20,12 +21,12 @@ class Admin extends Controller
     public function index()
     {
         if (!$_SESSION['admin']) $this->view->generate($this->folderViews . 'admin_login_page.php', $this->folderViews . 'template_admin_page.php');
-        else $this->getClients();
+        else  $this->getClients();
     }
 
     public function login()
     {
-        $this->model->login();
+        if($this->model->login()) header('Location: ' . SITE_ROOT . 'admin/getClients');;
     }
 
     public function getClients()

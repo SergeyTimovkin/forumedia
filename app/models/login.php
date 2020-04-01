@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+
 use Model, DB;
 
 /**
@@ -26,14 +27,14 @@ class Login extends Model
      */
     public function loginUser()
     {
-        $login = preg_replace('/\s+/', '', $_POST['enter-login']);
-        $password = md5($_POST['enter-password']);
+        $login = preg_replace('/\s+/', '', $_POST['enter_login']);
+        $password = md5($_POST['enter_password']);
         $sql = "SELECT * FROM `clients` WHERE  login ='{$login}' and password = '{$password}'";
         $result = $this->db->DBRequest($sql);
         if ($result->num_rows) {
             $_SESSION['username'] = $login;
         } else {
-            echo 'ДОБАВИТЬ ПРОВЕРКУ НА НЕСООТВЕТСТВИЕ ЛОГИНА И ПАРОЛЯ';
+            echo 1;
         }
 
     }

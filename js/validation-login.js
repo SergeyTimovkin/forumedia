@@ -1,33 +1,37 @@
-$("form#loginForm").submit(function (e) {
+$("form#enterForm").submit(function (e) {
+
         e.preventDefault();
-        $(".invalid-feedback").remove();
-        $(".is-valid, .is-invalid").removeClass("is-valid is-invalid");
+        $("#enterForm .invalid-feedback").remove();
+        $("#enterForm .is-valid, #enterForm .is-invalid").removeClass("is-valid is-invalid")
 
-        var data = new FormData(this);
+        var enter_login = $("#enter-login").val();
+        var enter_password = $("#enter-password").val();
 
-
-        for (let [key, value] of data) {
-            if (!value) {
-                $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
-            }
+        if (!enter_login) {
+            $("#enter-login").addClass("is-invalid").after("<div class='invalid-feedback d-block'>Не заполнено</div>");
+        }
+        if (!enter_password) {
+            $("#enter-password").addClass("is-invalid").after("<div class='invalid-feedback d-block'>Не заполнено</div>");
         }
 
-        if ($('.is-invalid').length == 0) {
+
+        if ($('#enterForm .is-invalid').length == 0) {
             $.ajax({
                     url: document.location.origin + '/login/loginUser',
                     type: 'POST',
-                    dataType: "text",
-                    data: data,
-                    success: function (incorrectUser) {
-                        if (incorrectUser) {
-                            $("#pass").after("<div class='invalid-feedback d-block'>Пара логин-пароль не совпадают</div>");
+                    dataType: "JSON",
+                    data: {
+                        enter_login: enter_login,
+                        enter_password: enter_password
+                    },
+                    success: function (result) {
+                        if (result) {
+                            $("#enter-password").after("<div class='invalid-feedback d-block'>Пара логин-пароль не совпадают</div>");
                         } else {
+                            debugger;
                             window.location.replace(document.location.origin + '/login/profilePage');
                         }
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
+                    }
                 }
             );
         }

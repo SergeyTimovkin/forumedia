@@ -14,9 +14,10 @@ class Admin extends Model
 
     public function login()
     {
-        if ($_POST['admin_login'] == admin_login && md5($_POST['admin_password']) == admin_password)
+        if ($_POST['admin_login'] == admin_login && md5($_POST['admin_password']) == admin_password) {
             $_SESSION['admin'] = admin_login;
-        else return false;
+            return true;
+        }
     }
 
     public function getClient()

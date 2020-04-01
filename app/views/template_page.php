@@ -83,7 +83,7 @@
             <div class="modal-body">
                 <div class="loginModal">
                     <!--TODO НАСТРОИТЬ ВАЛИДАЦИЮ ПОЛЕЙ-->
-                    <form id="enterForm" method="post" action="<?= SITE_ROOT . "login/loginUser" ?>">
+                    <form id="enterForm">
                         <div class=" form-row mb-3">
                             <label for="enter-login">Логин</label>
                             <input type="text" class="form-control" name="enter-login" id="enter-login"

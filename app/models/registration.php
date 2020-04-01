@@ -20,21 +20,6 @@ class Registration extends Model
         $this->db = DB::getInstance();
     }
 
-    /**
-     * Функция загружает аватар в директорию $dir
-     *
-     * @param $file_name
-     * @param $file_tmpname
-     * @param string $dir
-     *
-     * @return void
-     */
-    public function uploadAvatar($file_name, $file_tmpname, $dir = '/img/avatars/')
-    {
-        $uploadfile = $_SERVER['DOCUMENT_ROOT'] . $dir . basename($file_name);
-        move_uploaded_file($file_tmpname, $uploadfile);
-    }
-
 
     /**
      * Функция добавляет пользователя в БД
@@ -90,12 +75,12 @@ class Registration extends Model
      * @return void
      */
 
-    /*TODO ДОДЕЛАТЬ СЖАТИЕ ИЗОБРАЖЕНИЯ*/
-    public function resizeImage($image, $w_o = 900, $h_o = false)
+
+    public function uploadAvatarAndResize($image, $file_name, $dir = '/img/avatars/', $w_o = 900, $h_o = false)
     {
-        list($w_i, $h_i, $type) = getimagesize($image); // Получаем размеры и тип изображения (число)
-        $types = array("", "gif", "jpeg", "png"); // Массив с типами изображений
-        $ext = $types[$type]; // Зная "числовой" тип изображения, узнаём название типа
+        list($w_i, $h_i, $type) = getimagesize($image);
+        $types = array("", "gif", "jpeg", "png");
+        $ext = $types[$type];
         if ($ext) {
             $func = 'imagecreatefrom' . $ext; // Получаем название функции, соответствующую типу, для создания изображения
             $img_i = $func($image); // Создаём дескриптор для работы с исходным изображением
@@ -106,7 +91,13 @@ class Registration extends Model
         $img_o = imagecreatetruecolor($w_o, $h_o); // Создаём дескриптор для выходного изображения
         imagecopyresampled($img_o, $img_i, 0, 0, 0, 0, $w_o, $h_o, $w_i, $h_i); // Переносим изображение из исходного в выходное, масштабируя его
         $func = 'image' . $ext; // Получаем функция для сохранения результата
-        $func($img_o, $image); // Сохраняем изображение в тот же файл, что и исходное, возвращая результат этой операции
+        $func($img_o, $_SERVER['DOCUMENT_ROOT'] . $dir . basename($file_name)); // Сохраняем изображение в тот же файл, что и исходное, возвращая результат этой операции
+    }
+
+    public function uploadAvatar($file_name, $file_tmpname, $dir = '/img/avatars/')
+    {
+        $uploadfile = $_SERVER['DOCUMENT_ROOT'] . $dir . basename($file_name);
+        move_uploaded_file($file_tmpname, $uploadfile);
     }
 
     /**
@@ -123,7 +114,9 @@ class Registration extends Model
         $address = $_POST['address'];
         $avatar = $_FILES['avatar']['name'];
         $avatar_tmp_name = $_FILES['avatar']['tmp_name'];
-        $this->uploadAvatar($avatar, $avatar_tmp_name);
+        list($w_i, $h_i, $type) = getimagesize($avatar_tmp_name);
+        if ($w_i > 900) $this->uploadAvatarAndResize($avatar_tmp_name, $avatar); else $this->uploadAvatar($avatar_tmp_name, $avatar);
+        $this->uploadAvatarAndResize($avatar_tmp_name, $avatar, '/img/avatars/avatarsMini/', 100);
         $this->insertUserDB($email, $login, $password, $surname, $name, $phone, $avatar, $address);
         $_SESSION['username'] = $login;
         echo true;

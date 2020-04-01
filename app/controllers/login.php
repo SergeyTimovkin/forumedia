@@ -38,8 +38,6 @@ class Login extends Controller
         if ($_SESSION['username']) {
             header('Location: ' . SITE_ROOT . 'notification/pageYouLogged');
             exit;
-        } else {
-            $this->view->generate($this->folderViews . 'login_page.php', 'template_page.php');
         }
     }
 
@@ -51,7 +49,6 @@ class Login extends Controller
     public function loginUser()
     {
         $this->model->loginUser();
-        if ($_SESSION['username']) $this->profilePage();
     }
 
     /**
