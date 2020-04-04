@@ -48,8 +48,8 @@ class Registration extends Model
     {
         $sql = "SELECT id FROM `clients` WHERE email = '{$_POST['email']}'";
         $result = $this->db->DBRequest($sql);
-        if ($result->num_rows) {
-            echo '1';
+        if ($result->num_rows == 0) {
+            echo 'noExist';
         }
     }
 
@@ -60,8 +60,8 @@ class Registration extends Model
     {
         $sql = "SELECT id FROM `clients` WHERE login = '{$_POST['login']}'";
         $result = $this->db->DBRequest($sql);
-        if ($result->num_rows) {
-            echo '1';
+        if ($result->num_rows == 0) {
+            echo 'noExist';
         }
     }
 

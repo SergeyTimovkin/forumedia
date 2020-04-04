@@ -33,7 +33,7 @@
             <td><?= $data['address']; ?></td>
         </tr>
     </table>
-    <a href="<?= SITE_ROOT . "login/editUserData/" ?>" class=" btn btn-outline-primary text-primary">
+    <a href="<?= SITE_ROOT . "login/editClientDataPage"; ?>" class=" btn btn-outline-primary text-primary">
         Редактировать данные профиля
     </a>
 </div>

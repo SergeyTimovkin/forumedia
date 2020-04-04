@@ -1,4 +1,4 @@
-$("form#registerForm").submit(function (e) {
+$("form#editClientData").submit(function (e) {
 
     //почистим и остановим отправку
     e.preventDefault();
@@ -6,7 +6,7 @@ $("form#registerForm").submit(function (e) {
     $(".is-valid, .is-invalid").removeClass("is-valid is-invalid");
 
 
-    var data = new FormData($('#registerForm')[0]);
+    var data = new FormData($('#editClientData')[0]);
 
 
     for (let [key, value] of data) {
@@ -16,25 +16,8 @@ $("form#registerForm").submit(function (e) {
                 var regex_login = /^[\w\d]{5,}$/;
                 if (!value) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
-                }
-                //проверим логин на соответствие формату
-                else if (!regex_login.test(value)) {
+                } else if (!regex_login.test(value)) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Логин не соответвтвует формату</div>");
-                } else {
-                    $.ajax({
-                            async: false,
-                            url: document.location.origin + '/registration/existsLogin',
-                            type: 'POST',
-                            data: {login: value},
-                            success: function (existsUsername) {
-                                if (existsUsername) {
-                                    $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Логин занят</div>");
-                                } else
-                                    $("#" + key).addClass("is-valid");
-                            }
-
-                        }
-                    );
                 }
                 break;
 
@@ -43,48 +26,25 @@ $("form#registerForm").submit(function (e) {
                 var regex_email = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/;
                 if (!value) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
-                }
-                //проверим на соответствие регулярке
-                else if (!regex_email.test(value)) {
+                } else if (!regex_email.test(value)) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>E-mail не соответвтвует формату</div>");
-                }
-                //проверим занят ли email
-                else {
-                    $.ajax({
-                            async: false,
-                            url: document.location.origin + '/registration/existsEmail',
-                            type: 'POST',
-                            data: {email: value},
-                            success: function (existsEmail) {
-                                if (existsEmail) {
-                                    $("#email").addClass("is-invalid").after("<div class='invalid-feedback'>E-mail занят</div>");
-                                } else
-                                    $("#email").addClass("is-valid");
-                            }
-                        }
-                    );
                 }
                 break;
 
 
             case 'password':
                 var regex_password = /^[\w\sа-яА-Я]{6,}$/;
-                if (!value) {
-                    $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
-                    $("#passwordRepeat").addClass("is-invalid");
-                }
-                // проверим на соответствие формату
-                else if (!regex_password.test(value)) {
-                    $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Минимум 6. Без спецсимволов.</div>");
-                    $("#passwordRepeat").addClass("is-invalid");
-                }
-                //на равенство введённых полей
-                else if (value != $("#passwordRepeat").val()) {
-                    $("#" + key).addClass("is-invalid");
-                    $("#passwordRepeat").addClass("is-invalid");
-                    $("#passwordRepeat").addClass("is-invalid").after("<div class='invalid-feedback'>Пароли не совпадают</div>");
-                } else {
-                    $("#password, #passwordRepeat").addClass("is-valid");
+                if (value!="") {
+                    if (!regex_password.test(value)) {
+                        $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Минимум 6. Без спецсимволов.</div>");
+                        $("#passwordRepeat").addClass("is-invalid");
+                    } else if (value != $("#passwordRepeat").val()) {
+                        $("#" + key).addClass("is-invalid");
+                        $("#passwordRepeat").addClass("is-invalid");
+                        $("#passwordRepeat").addClass("is-invalid").after("<div class='invalid-feedback'>Пароли не совпадают</div>");
+                    } else {
+                        $("#password, #passwordRepeat").addClass("is-valid");
+                    }
                 }
                 break;
 
@@ -135,7 +95,7 @@ $("form#registerForm").submit(function (e) {
 
     if ($('.is-invalid').length == 0) {
         $.ajax({
-            url: document.location.origin + '/registration/registerUser',
+            url: document.location.origin + '/login/editClientData',
             type: 'POST',
             dataType: "JSON",
             data: data,

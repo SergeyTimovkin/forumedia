@@ -21,7 +21,6 @@ class Login extends Controller
     public function __construct()
     {
         parent::__construct();
-        //todo зачем подключаться к БД, если мы просто грузим страницу page
         $this->model = new \app\models\Login();
     }
 
@@ -69,15 +68,23 @@ class Login extends Controller
             exit;
         }
     }
-    public function editUserData()
+    public function editClientDataPage()
     {
         if ($_SESSION['username']) {
             $profileData = $this->model->getUserData();
-            $this->view->generate($this->folderViews . 'editUserData_page.php', 'template_page.php', $profileData);
+            $this->view->generate($this->folderViews . 'editClientData_page.php', 'template_page.php', $profileData);
         } else {
             header('Location: ' . SITE_ROOT . '/login');
             exit;
         }
+    }
+    public function getLogin()
+    {
+        $this->model->getLogin();
+    }
+    public function editClientData()
+    {
+       $this->model->editClientData();
     }
 
     /**

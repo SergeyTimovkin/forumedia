@@ -16,9 +16,7 @@ $("form#registerForm").submit(function (e) {
                 var regex_login = /^[\w\d]{5,}$/;
                 if (!value) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
-                }
-                //проверим логин на соответствие формату
-                else if (!regex_login.test(value)) {
+                } else if (!regex_login.test(value)) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Логин не соответвтвует формату</div>");
                 } else {
                     $.ajax({
@@ -26,11 +24,11 @@ $("form#registerForm").submit(function (e) {
                             url: document.location.origin + '/registration/existsLogin',
                             type: 'POST',
                             data: {login: value},
-                            success: function (existsUsername) {
-                                if (existsUsername) {
-                                    $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Логин занят</div>");
-                                } else
-                                    $("#" + key).addClass("is-valid");
+                            success: function () {
+                                $("#" + key).addClass("is-valid");
+                            },
+                            error: function () {
+                                $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Логин занят</div>");
                             }
 
                         }
@@ -43,43 +41,36 @@ $("form#registerForm").submit(function (e) {
                 var regex_email = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/;
                 if (!value) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
-                }
-                //проверим на соответствие регулярке
-                else if (!regex_email.test(value)) {
+                } else if (!regex_email.test(value)) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>E-mail не соответвтвует формату</div>");
-                }
-                //проверим занят ли email
-                else {
+                } else {
                     $.ajax({
-                            async: false,
-                            url: document.location.origin + '/registration/existsEmail',
-                            type: 'POST',
-                            data: {email: value},
-                            success: function (existsEmail) {
-                                if (existsEmail) {
-                                    $("#email").addClass("is-invalid").after("<div class='invalid-feedback'>E-mail занят</div>");
-                                } else
-                                    $("#email").addClass("is-valid");
-                            }
+                        async: false,
+                        url: document.location.origin + '/registration/existsEmail',
+                        type: 'POST',
+                        data: {email: value},
+                        success: function () {
+                            $("#email").addClass("is-valid");
+                        },
+                        error: function () {
+                            $("#email").addClass("is-invalid").after("<div class='invalid-feedback'>E-mail занят</div>");
                         }
-                    );
+                    });
                 }
                 break;
 
 
-            case 'password':
+            case
+            'password'
+            :
                 var regex_password = /^[\w\sа-яА-Я]{6,}$/;
                 if (!value) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
                     $("#passwordRepeat").addClass("is-invalid");
-                }
-                // проверим на соответствие формату
-                else if (!regex_password.test(value)) {
+                } else if (!regex_password.test(value)) {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Минимум 6. Без спецсимволов.</div>");
                     $("#passwordRepeat").addClass("is-invalid");
-                }
-                //на равенство введённых полей
-                else if (value != $("#passwordRepeat").val()) {
+                } else if (value != $("#passwordRepeat").val()) {
                     $("#" + key).addClass("is-invalid");
                     $("#passwordRepeat").addClass("is-invalid");
                     $("#passwordRepeat").addClass("is-invalid").after("<div class='invalid-feedback'>Пароли не совпадают</div>");
@@ -89,7 +80,9 @@ $("form#registerForm").submit(function (e) {
                 break;
 
 
-            case 'phone':
+            case
+            'phone'
+            :
                 if (value == '+7 ') {
                     $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Не заполнено</div>");
                 } else if (value.length != 17) {
@@ -99,7 +92,9 @@ $("form#registerForm").submit(function (e) {
                 break;
 
 
-            case 'avatar' :
+            case
+            'avatar'
+            :
                 if (value.name) {
                     var reg_avatar = /^[\wа-яА-Я\s_]+.(jpg|jpeg|png|JPG|JPEG|PNG)$/;
                     if (!reg_avatar.test(value.name)) $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Разрешены только jpg, jpeg, png форматы</div>");
@@ -108,7 +103,9 @@ $("form#registerForm").submit(function (e) {
                 break;
 
 
-            case 'name':
+            case
+            'name'
+            :
                 if (value) {
                     var regex_name = /^([А-Яа-яa-zA-ZёЁ-]{1,23})$/;
                     if (!regex_name.test(value)) $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Имя не соответствует формату</div>");
@@ -117,7 +114,9 @@ $("form#registerForm").submit(function (e) {
                 break;
 
 
-            case 'surname':
+            case
+            'surname'
+            :
                 if (value) {
                     var regex_name = /^([А-Яа-яa-zA-ZёЁ-]{1,23})$/;
                     if (!regex_name.test(value)) $("#" + key).addClass("is-invalid").after("<div class='invalid-feedback'>Фамилия не соответствует формату</div>");
@@ -126,7 +125,9 @@ $("form#registerForm").submit(function (e) {
                 break;
 
 
-            case 'address':
+            case
+            'address'
+            :
                 break;
 
         }
